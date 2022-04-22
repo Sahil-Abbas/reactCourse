@@ -74,4 +74,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 git clone https://github.com/Sahil-Abbas/reactCourse.git
 
 <!-- change branch -->
-git checkout lec/useState
+git checkout lec/useEffect2
+npm i
+npm start

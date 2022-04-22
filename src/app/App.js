@@ -1,40 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import BookComponent from './components/BookComponent';
 import './App.css';
 
-const books = ['English', 'Urdu', 'Math', 'Chemistry'];
-
 function App() {
-    const [book, setBook] = useState(books);
-    const [enteredBook, setEnteredBook] = useState('Physics');
-    const [toggle, setToggle] = useState(true);
-
-    const addBookHandler = () => {
-        setBook([...book, enteredBook])
-    }
+    const [posts, setPost] = useState([]);
+    const [editAblePost, setEditAblePost] = useState({});
+    const [toggle, setToggle] = useState(false);
 
     // componentDidMount
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setBook([...book, 'new book'])
-    //     }, 1000);
+    useEffect(() => {
+        fetch('https://jsonplaceholder.typicode.com/posts')
+            
+            .then((data) => data.json())
 
-    //     // componentWillUnMount
-    //     // componentDidUpdate
-    // }, [book])
+            .then((response) => {
+                setPost(response)
+            }).catch((err) => {
+                console.log(err)
+            })
+        // componentWillUnMount
+        // componentDidUpdate
+    }, [])
 
-    const content = book.map((element, i) => {
-        return <BookComponent book={element} key={i} />
-    })
+    const editPost = (post) => {
+        setToggle(true);
+        setEditAblePost(post)
+    }
 
-  return (
-      <div className='App'>
-          <button onClick={addBookHandler}>Add Book</button>
-          <button onClick={() => setToggle(!toggle)}>Hide/Show</button>
-          <input onChange={(e) => setEnteredBook(e.target.value)} value={enteredBook} type="text" />
-          {toggle && content}
-      </div>
-  )
+    const postChangeHandler = (e) => {
+        setEditAblePost((prevState) => {
+            return {...prevState, [e.target.name]: e.target.value}
+        })
+    }
+
+    const upDatePost = () => {
+        setPost((prevPost) => {
+            const updatedPost = [...prevPost];
+            updatedPost[editAblePost.id - 1] = editAblePost
+            return updatedPost
+        })
+        setToggle(false);
+    }
+
+    return (
+        <div className='App'>
+            {toggle && <form >
+                <input type="text" name='title'
+                    value={editAblePost.title}
+                    onChange={(e) => postChangeHandler(e)}
+                />
+                <br />
+                <input type="text" name='body'
+                    value={editAblePost.body}
+                    onChange={(e) => postChangeHandler(e)}
+                />
+
+                <button type='button' onClick={upDatePost}>Update</button>
+            </form>}
+            {
+                posts.map((post, index) => {
+                    return (
+                        <div onClick={() => editPost(post)} key={index}>
+                            <h1>{post.id + " " + post.userId}</h1>
+                            <small>{post.title}</small>
+                            <p>{post.body}</p>
+                        </div>
+                    )
+                })
+            }
+        </div>
+    )
 }
 
 export default App
