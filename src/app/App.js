@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import EditPostComponent from './components/EditPostComponent';
+import PostsComponent from './components/PostsComponent';
 
 function App() {
     const [posts, setPost] = useState([]);
@@ -43,30 +46,12 @@ function App() {
 
     return (
         <div className='App'>
-            {toggle && <form >
-                <input type="text" name='title'
-                    value={editAblePost.title}
-                    onChange={(e) => postChangeHandler(e)}
-                />
-                <br />
-                <input type="text" name='body'
-                    value={editAblePost.body}
-                    onChange={(e) => postChangeHandler(e)}
-                />
-
-                <button type='button' onClick={upDatePost}>Update</button>
-            </form>}
-            {
-                posts.map((post, index) => {
-                    return (
-                        <div onClick={() => editPost(post)} key={index}>
-                            <h1>{post.id + " " + post.userId}</h1>
-                            <small>{post.title}</small>
-                            <p>{post.body}</p>
-                        </div>
-                    )
-                })
-            }
+            <h2>React Routing</h2>
+            <Link to='/posts'>Posts</Link>
+            <Routes>
+                <Route path='/posts' element={ <PostsComponent posts={posts} editPost={editPost} />} />
+                <Route path='/posts/:id' element={<EditPostComponent editPost={editAblePost} editChangeHandler={postChangeHandler} upDatePost={upDatePost} />} />
+            </Routes>
         </div>
     )
 }
