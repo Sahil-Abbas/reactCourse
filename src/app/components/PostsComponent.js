@@ -1,10 +1,12 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function PostsComponent(props) {
+
     const postContent = props.posts.map((post, index) => {
         return (
-            <div onClick={() => props.editPost(post)} key={index}>
-                <h1>{post.id + " " + post.userId}</h1>
+            <div key={index}>
+                <h1><Link to={`/posts/${post.id}`}>{post.id + " " + post.userId}</Link></h1>
                 <small>{post.title}</small>
                 <p>{post.body}</p>
             </div>

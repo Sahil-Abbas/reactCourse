@@ -6,12 +6,13 @@ import PostsComponent from './components/PostsComponent';
 
 function App() {
     const [posts, setPost] = useState([]);
-    const [editAblePost, setEditAblePost] = useState({});
-    const [toggle, setToggle] = useState(false);
 
     // componentDidMount
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch('https://jsonplaceholder.typicode.com/posts',
+            {
+                method: "GET"
+            })
             
             .then((data) => data.json())
 
@@ -24,33 +25,19 @@ function App() {
         // componentDidUpdate
     }, [])
 
-    const editPost = (post) => {
-        setToggle(true);
-        setEditAblePost(post)
-    }
-
-    const postChangeHandler = (e) => {
-        setEditAblePost((prevState) => {
-            return {...prevState, [e.target.name]: e.target.value}
-        })
-    }
-
-    const upDatePost = () => {
-        setPost((prevPost) => {
-            const updatedPost = [...prevPost];
-            updatedPost[editAblePost.id - 1] = editAblePost
-            return updatedPost
-        })
-        setToggle(false);
-    }
-
     return (
         <div className='App'>
             <h2>React Routing</h2>
             <Link to='/posts'>Posts</Link>
             <Routes>
-                <Route path='/posts' element={ <PostsComponent posts={posts} editPost={editPost} />} />
-                <Route path='/posts/:id' element={<EditPostComponent editPost={editAblePost} editChangeHandler={postChangeHandler} upDatePost={upDatePost} />} />
+
+                <Route path='/posts' element={
+                    <PostsComponent posts={posts} />
+                } />
+
+                <Route path='/posts/:id' element={
+                    <EditPostComponent />
+                } />
             </Routes>
         </div>
     )
