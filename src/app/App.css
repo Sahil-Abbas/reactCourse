@@ -6,3 +6,18 @@ button {
   display: block;
   margin: auto;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+  margin: 0 20px;
+  line-height: 56px;
+}
+
+.active {
+  color: red;
+}
+
+.active2 {
+  color: green;
+}
