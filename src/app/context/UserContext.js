@@ -12,4 +12,4 @@ export const logout = () => {
     loginState.isLoggedin = false;
 }
 
-export const UserContext = React.createContext(loginState);
+export const UserContext = React.createContext('');

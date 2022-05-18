@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import Counter from './components/Counter';
 import HeaderComponent from './components/HeaderComponent';
 import LoginComponent from './components/LoginComponent';
 import MenuComponent from './components/MenuComponent';
@@ -39,6 +40,7 @@ function App() {
                     <Route path=':id' element={<OrderDetail />} />
                 </Route>
                 <Route path='/login' element={<LoginComponent />} />
+                <Route path='/counter' element={<Counter />} />
                 <Route path="*" element={<div>404</div>} />
             </Routes>
         </div>
